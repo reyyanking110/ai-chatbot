@@ -1451,9 +1451,11 @@ def skills_run(
     if not skill.run:
         console.print(f"[warn]'{name}' is prompt-only (no run: script in SKILL.md).[/warn]")
         raise typer.Exit()
-    ctx = build_context(cfg, make_backend(cfg), approve=_cli_approve(cfg))
+    ctx = build_context(cfg, make_backend(cfg), approve=allow_all)
     from .skills import run_skill_script
 
+    # Explicit `jarvis skills run` is already a direct user instruction, so it
+    # is not gated again by the model-approval prompt.
     result = run_skill_script(ctx, skill, request)
     console.print(result.content)
 

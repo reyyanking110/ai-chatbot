@@ -53,7 +53,7 @@ First public release. A private, local-first assistant that runs in your termina
 - Every tool call is appended to `logs/audit.jsonl`.
 
 ### Tested
-- 100 offline tests (no network, no model downloads): config round-trips, policy
+- 123 offline tests (no network, no model downloads): config round-trips, policy
   enforcement, chunking, multilingual retrieval, incremental indexing, the agent
   loop, Ollama wire format against a fake server, skill parsing/scanning/
   installation, memory, speech cleanup and the CLI.

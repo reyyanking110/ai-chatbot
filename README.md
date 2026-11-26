@@ -215,7 +215,7 @@ jarvis digest [--speak]    morning briefing              jarvis schedule     cro
 
 jarvis library index|search|stats|list|reset            jarvis agents       list the agents
 jarvis models plan|current|list|pull|switch              jarvis sessions     past conversations
-jarvis skills    list|install|remove|enable|disable|show|scan|new|export|run
+jarvis skills    list|install|remove|enable|disable|show|scan|new|export|run|review
 jarvis google    status|setup|auth|test                  jarvis memory  list|add|search|forget|clear
 jarvis config    show|path|set|edit|reset                jarvis logs         audit trail
 jarvis note "..."                                          jarvis --version
@@ -268,7 +268,7 @@ relocate.
 
 ```bash
 pip install -e ".[dev]"
-pytest -q                     # 96 tests, no network, no model needed
+pytest -q                     # 123 tests, no network, no model needed
 ```
 
 ```
@@ -279,13 +279,25 @@ jarvis_local/
 ├── backends.py       Ollama / OpenAI-compatible / deterministic mock
 ├── runtime.py        the agent loop, context fitting, approvals
 ├── agents/           chat, research, code, digest (prompts + data prep)
-├── documents.py      SQLite FTS5 + embeddings, chunking, citations
-├── policies + skills + voice + integrations (Google, demo)
+├── documents.py      SQLite FTS5 + trigram + embeddings, chunking, citations
+├── policy.py         path, command and audit rules (one choke point)
+├── skills.py         SKILL.md parsing, scanning, install, usage tracking
+├── voice.py          local TTS (say / piper / espeak-ng) + transcripts
+├── integrations/     Google (read-only Gmail/Calendar) + demo source
 └── tools/            files, shell, system, knowledge (search/memory/notes/speech)
 ```
 
 The mock backend is a first-class citizen: it drives the real tools, retrieval and
 digest pipeline, which is how the test suite runs fast and offline.
+
+## Learn more
+
+- [`docs/architecture.md`](docs/architecture.md) — how the agent loop, retrieval and
+  safety boundaries fit together.
+- [`docs/privacy.md`](docs/privacy.md) — exactly what is stored, what leaves the
+  machine, and what the threat model is (and is not).
+- [`examples/skills/`](examples/skills/) — a script-backed skill and a prompt-only one.
+- [`CHANGELOG.md`](CHANGELOG.md) · [`CONTRIBUTING.md`](CONTRIBUTING.md)
 
 ## Limitations, honestly
 
